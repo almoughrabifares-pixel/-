@@ -136,11 +136,6 @@
             background-color: #fcfbf8;
         }
 
-        .input-container input:focus {
-            border-color: #16302b;
-            background-color: #ffffff;
-        }
-
         .btn-submit {
             width: 100%;
             padding: 12px;
@@ -184,8 +179,7 @@
             <button type="button" class="tab-btn" id="signupTabBtn">إنشاء حساب جديد</button>
         </div>
 
-        <!-- 1. نموذج تسجيل الدخول -->
-        <form id="loginForm" class="auth-form active">
+        <div id="loginForm" class="auth-form active">
             <div class="brand-header">
                 <h2>تسجيل الدخول</h2>
                 <p>أدخل بياناتك للوصول إلى الخدمة</p>
@@ -203,10 +197,9 @@
                 </div>
             </div>
             <button type="button" class="btn-submit" id="btnDoLogin">تسجيل الدخول</button>
-        </form>
+        </div>
 
-        <!-- 2. نموذج إنشاء الحساب -->
-        <form id="signupForm" class="auth-form">
+        <div id="signupForm" class="auth-form">
             <div class="brand-header">
                 <h2>إنشاء حساب جديد</h2>
                 <p>أدخل الاسم ورقم الهاتف للتسجيل</p>
@@ -224,7 +217,7 @@
                 </div>
             </div>
             <button type="button" class="btn-submit" id="btnDoSignup">إنشاء الحساب</button>
-        </form>
+        </div>
 
         <div class="form-footer">
             <p>بوابة الخدمات الإلكترونية الرسمية</p>
@@ -238,7 +231,6 @@
             var loginBtn = document.getElementById('loginTabBtn');
             var signupBtn = document.getElementById('signupTabBtn');
 
-            // التبديل بين التبويبات
             loginBtn.addEventListener('click', function() {
                 loginForm.classList.add('active');
                 signupForm.classList.remove('active');
@@ -253,7 +245,18 @@
                 loginBtn.classList.remove('active');
             });
 
-            // تسجيل الدخول
+            // دالة التوجيه الذكية المتوافقة مع GitHub Pages
+            function goToNextPage(userName) {
+                localStorage.setItem('userName', userName);
+                
+                // جلب المسار الحالي وإزالة index.html إذا كان موجوداً بالرابط
+                var currentPath = window.location.pathname;
+                var basePath = currentPath.substring(0, currentPath.lastIndexOf('/') + 1);
+                
+                // التوجيه المباشر بالمسار الكامل الصحيح
+                window.location.href = window.location.origin + basePath + 'complaint.html';
+            }
+
             document.getElementById('btnDoLogin').addEventListener('click', function(e) {
                 e.preventDefault();
                 var user = document.getElementById('login-username').value.trim();
@@ -261,12 +264,9 @@
                     alert('يرجى إدخال اسم المستخدم أولاً'); 
                     return; 
                 }
-                localStorage.setItem('userName', user);
-                // توجيه مباشر لنفس المجلد بالجيت هب
-                window.location.href = 'complaint.html';
+                goToNextPage(user);
             });
 
-            // إنشاء الحساب
             document.getElementById('btnDoSignup').addEventListener('click', function(e) {
                 e.preventDefault();
                 var name = document.getElementById('signup-fullname').value.trim();
@@ -274,10 +274,8 @@
                     alert('يرجى إدخال الاسم الكامل أولاً'); 
                     return; 
                 }
-                localStorage.setItem('userName', name);
                 alert('تم إنشاء الحساب بنجاح!');
-                // توجيه مباشر لنفس المجلد بالجيت هب
-                window.location.href = 'complaint.html';
+                goToNextPage(name);
             });
         });
     </script>
