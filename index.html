@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>منصة الشكاوى والمقترحات الموحدة</title>
-    <!-- استدعاء خط تجوال -->
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
-    
     <style>
         * {
             box-sizing: border-box;
@@ -16,7 +14,7 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        html, body {
+        body {
             width: 100%;
             min-height: 100vh;
             background-color: #f4efe6;
@@ -26,7 +24,6 @@
             align-items: center;
         }
 
-        /* الهيدر العلوي */
         .syrian-identity-header {
             width: 100%;
             background-color: #16302b;
@@ -41,7 +38,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            direction: rtl;
         }
 
         .identity-text h1 {
@@ -56,7 +52,6 @@
             color: #c8b27c;
         }
 
-        /* الكارت الرئيسي */
         .login-wrapper {
             background-color: #ffffff;
             width: 92%;
@@ -66,7 +61,6 @@
             border-radius: 12px;
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
             border: 1px solid #e2ded4;
-            direction: rtl;
         }
 
         .tab-buttons {
@@ -87,7 +81,6 @@
             color: #687572;
             cursor: pointer;
             transition: all 0.2s ease;
-            font-family: 'Tajawal', sans-serif;
         }
 
         .tab-btn.active {
@@ -141,7 +134,6 @@
             font-size: 14px;
             outline: none;
             background-color: #fcfbf8;
-            font-family: 'Tajawal', sans-serif;
         }
 
         .input-container input:focus {
@@ -160,11 +152,6 @@
             font-weight: 700;
             cursor: pointer;
             margin-top: 10px;
-            font-family: 'Tajawal', sans-serif;
-        }
-
-        .btn-submit:active {
-            opacity: 0.9;
         }
 
         .form-footer {
@@ -177,13 +164,6 @@
         .form-footer p {
             font-size: 11.5px;
             color: #888888;
-        }
-
-        @media screen and (max-width: 600px) {
-            .syrian-identity-header { padding: 10px 14px; }
-            .identity-text h1 { font-size: 15px; }
-            .identity-text p { font-size: 10px; }
-            .login-wrapper { width: 94%; margin: 20px auto; padding: 18px 15px; }
         }
     </style>
 </head>
@@ -205,52 +185,46 @@
         </div>
 
         <!-- 1. نموذج تسجيل الدخول -->
-        <div id="loginForm" class="auth-form active">
+        <form id="loginForm" class="auth-form active">
             <div class="brand-header">
                 <h2>تسجيل الدخول</h2>
                 <p>أدخل بياناتك للوصول إلى الخدمة</p>
             </div>
-
             <div class="form-group">
                 <label for="login-username">اسم المستخدم</label>
                 <div class="input-container">
                     <input type="text" id="login-username" placeholder="أدخل اسم المستخدم">
                 </div>
             </div>
-
             <div class="form-group">
                 <label for="login-password">كلمة المرور</label>
                 <div class="input-container">
                     <input type="password" id="login-password" placeholder="أدخل كلمة المرور">
                 </div>
             </div>
-
             <button type="button" class="btn-submit" id="btnDoLogin">تسجيل الدخول</button>
-        </div>
+        </form>
 
         <!-- 2. نموذج إنشاء الحساب -->
-        <div id="signupForm" class="auth-form">
+        <form id="signupForm" class="auth-form">
             <div class="brand-header">
                 <h2>إنشاء حساب جديد</h2>
                 <p>أدخل الاسم ورقم الهاتف للتسجيل</p>
             </div>
-
             <div class="form-group">
                 <label for="signup-fullname">الاسم الكامل</label>
                 <div class="input-container">
                     <input type="text" id="signup-fullname" placeholder="أدخل اسمك الكامل">
                 </div>
             </div>
-
             <div class="form-group">
                 <label for="signup-phone">رقم الهاتف</label>
                 <div class="input-container">
                     <input type="tel" id="signup-phone" placeholder="09xxxxxxxx">
                 </div>
             </div>
-
             <button type="button" class="btn-submit" id="btnDoSignup">إنشاء الحساب</button>
-        </div>
+        </form>
 
         <div class="form-footer">
             <p>بوابة الخدمات الإلكترونية الرسمية</p>
@@ -263,10 +237,8 @@
             var signupForm = document.getElementById('signupForm');
             var loginBtn = document.getElementById('loginTabBtn');
             var signupBtn = document.getElementById('signupTabBtn');
-            var btnDoLogin = document.getElementById('btnDoLogin');
-            var btnDoSignup = document.getElementById('btnDoSignup');
 
-            // تبديل بين التبويبات بدون استخدام onclick خارجي
+            // التبديل بين التبويبات
             loginBtn.addEventListener('click', function() {
                 loginForm.classList.add('active');
                 signupForm.classList.remove('active');
@@ -281,28 +253,30 @@
                 loginBtn.classList.remove('active');
             });
 
-            // التعامل مع كبسة تسجيل الدخول
-            btnDoLogin.addEventListener('click', function() {
+            // تسجيل الدخول
+            document.getElementById('btnDoLogin').addEventListener('click', function(e) {
+                e.preventDefault();
                 var user = document.getElementById('login-username').value.trim();
-                if (!user) {
-                    alert('يرجى إدخال اسم المستخدم أولاً');
-                    return;
+                if (!user) { 
+                    alert('يرجى إدخال اسم المستخدم أولاً'); 
+                    return; 
                 }
-                localStorage.setItem('userLoggedIn', 'true');
                 localStorage.setItem('userName', user);
+                // توجيه مباشر لنفس المجلد بالجيت هب
                 window.location.href = 'complaint.html';
             });
 
-            // التعامل مع كبسة إنشاء الحساب
-            btnDoSignup.addEventListener('click', function() {
+            // إنشاء الحساب
+            document.getElementById('btnDoSignup').addEventListener('click', function(e) {
+                e.preventDefault();
                 var name = document.getElementById('signup-fullname').value.trim();
-                if (!name) {
-                    alert('يرجى إدخال الاسم الكامل أولاً');
-                    return;
+                if (!name) { 
+                    alert('يرجى إدخال الاسم الكامل أولاً'); 
+                    return; 
                 }
-                localStorage.setItem('userLoggedIn', 'true');
                 localStorage.setItem('userName', name);
                 alert('تم إنشاء الحساب بنجاح!');
+                // توجيه مباشر لنفس المجلد بالجيت هب
                 window.location.href = 'complaint.html';
             });
         });
